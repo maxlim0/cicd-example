@@ -24,7 +24,7 @@ private_data_subnet_cidrs = [
 enable_nat_gateway = true
 single_nat_gateway = true
 
-# eks_cluster_name = "lab-eks" 
-# extra_tags = {
-#   Owner = "maxim"
-# }
+eks_cluster_name = "lab-eks-dev" 
+extra_tags = {
+  Owner = "maxim"
+}

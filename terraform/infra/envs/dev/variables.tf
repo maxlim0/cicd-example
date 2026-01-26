@@ -52,3 +52,29 @@ variable "extra_tags" {
   type    = map(string)
   default = {}
 }
+
+
+variable "kubernetes_version" {
+  type    = string
+  default = "1.34"
+}
+
+variable "node_group_instance_types" {
+  type    = list(string)
+  default = ["t3.medium"]
+}
+
+variable "node_group_desired_size" {
+  type    = number
+  default = 1
+}
+
+variable "node_group_min_size" {
+  type    = number
+  default = 1
+}
+
+variable "node_group_max_size" {
+  type    = number
+  default = 2
+}
