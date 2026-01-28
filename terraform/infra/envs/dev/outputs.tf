@@ -46,6 +46,10 @@ output "eks_cluster_endpoint" {
   value = module.eks.cluster_endpoint
 }
 
+output "eks_cluster_ca_certificate" {
+  value = module.eks.cluster_ca_certificate
+}
+
 output "eks_node_group_name" {
   value = module.eks.node_group_name
 }

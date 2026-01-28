@@ -48,7 +48,7 @@ variable "node_group_name" {
 variable "node_group_instance_types" {
   description = "EC2 instance types for node group."
   type        = list(string)
-  default     = ["t3.medium"]
+  default     = ["m1.large","t3.medium", "t3.large"]
 }
 
 variable "node_group_capacity_type" {
