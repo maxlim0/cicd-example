@@ -1,5 +1,6 @@
 .terraform
 .terraform.lock.hcl
 terraform.tfstate
-terraform.tfvars
+*.tfvars
+*.tfvars.json
 /tmp/
