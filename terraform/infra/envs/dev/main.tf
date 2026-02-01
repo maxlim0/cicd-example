@@ -7,8 +7,8 @@ module "vpc" {
   vpc_cidr = var.vpc_cidr
   azs      = var.azs
 
-  public_subnet_cidrs      = var.public_subnet_cidrs
-  private_app_subnet_cidrs = var.private_app_subnet_cidrs
+  public_subnet_cidrs       = var.public_subnet_cidrs
+  private_app_subnet_cidrs  = var.private_app_subnet_cidrs
   private_data_subnet_cidrs = var.private_data_subnet_cidrs
 
   enable_nat_gateway = var.enable_nat_gateway
@@ -25,16 +25,24 @@ module "eks" {
   project = var.project
   env     = var.env
 
-  cluster_name = var.eks_cluster_name
+  cluster_name       = var.eks_cluster_name
   kubernetes_version = var.kubernetes_version
 
-  vpc_id = module.vpc.vpc_id
+  vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_app_subnet_ids
 
   node_group_instance_types = var.node_group_instance_types
   node_group_desired_size   = var.node_group_desired_size
   node_group_min_size       = var.node_group_min_size
   node_group_max_size       = var.node_group_max_size
+  eks_admin_principal_arn   = var.eks_admin_principal_arn
 
   tags = var.extra_tags
+}
+
+module "eks_addons" {
+  source = "../../modules/eks_addons"
+
+  cluster_name    = module.eks.cluster_name
+  route53_zone_id = var.route53_zone_id
 }

@@ -24,7 +24,12 @@ private_data_subnet_cidrs = [
 enable_nat_gateway = true
 single_nat_gateway = true
 
-eks_cluster_name = "lab-eks-dev" 
+eks_cluster_name = "lab-eks-dev"
 extra_tags = {
-  Owner = "maxim"
+  Owner = "max"
 }
+
+route53_zone_id = "Z085722428RUQCP223F6V"
+
+# here will be a problem wist SSO auto generated names, need to create separate Role into workload account with predictable name
+eks_admin_principal_arn = "arn:aws:iam::978937106980:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AdministratorAccess_2fc83e85ee464a51"

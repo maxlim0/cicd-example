@@ -56,7 +56,7 @@ variable "extra_tags" {
 
 variable "kubernetes_version" {
   type    = string
-  default = "1.34"
+  default = "1.35"
 }
 
 variable "node_group_instance_types" {
@@ -77,4 +77,12 @@ variable "node_group_min_size" {
 variable "node_group_max_size" {
   type    = number
   default = 2
+}
+
+variable "route53_zone_id" {
+  type = string
+}
+
+variable "eks_admin_principal_arn" {
+  type = string
 }

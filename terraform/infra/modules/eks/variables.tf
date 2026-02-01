@@ -14,7 +14,7 @@ variable "cluster_name" {
 variable "kubernetes_version" {
   description = "EKS Kubernetes version."
   type        = string
-  default     = "1.34"
+  default     = "1.35"
 }
 
 variable "vpc_id" {
@@ -75,4 +75,9 @@ variable "node_group_max_size" {
 variable "tags" {
   type    = map(string)
   default = {}
+}
+
+variable "eks_admin_principal_arn" {
+  type = string
+  description = "IAM principal ARN with admin access to EKS cluster"
 }
