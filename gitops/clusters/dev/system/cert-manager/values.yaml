@@ -21,3 +21,6 @@ resources:
 serviceAccount:
   create: false
   name: cert-manager
+
+syncOptions:
+  - ServerSideApply=true
