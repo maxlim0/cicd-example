@@ -14,7 +14,7 @@ resource "kubernetes_service_account_v1" "cert_manager" {
     namespace = "cert-manager"
 
     annotations = {
-      "eks.amazonaws.com/role-arn" = aws_iam_role.cert_manager.arn
+      "eks.amazonaws.com/role-arn" = var.cert_manager_role_arn
     }
   }
 

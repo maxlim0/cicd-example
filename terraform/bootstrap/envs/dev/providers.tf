@@ -8,7 +8,6 @@ data "terraform_remote_state" "infra" {
   }
 }
 
-
 provider "aws" {
   region = var.region
 }
