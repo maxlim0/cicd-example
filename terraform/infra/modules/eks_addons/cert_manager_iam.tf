@@ -18,6 +18,13 @@ data "aws_iam_policy_document" "cert_manager_assume_role" {
   }
 }
 
+resource "aws_eks_pod_identity_association" "cert_manager" {
+  cluster_name    = var.cluster_name
+  namespace       = "cert-manager"
+  service_account = "cert-manager"
+  role_arn        = aws_iam_role.cert_manager.arn
+}
+
 resource "aws_iam_role" "cert_manager" {
   name               = "${var.cluster_name}-cert-manager"
   assume_role_policy = data.aws_iam_policy_document.cert_manager_assume_role.json
