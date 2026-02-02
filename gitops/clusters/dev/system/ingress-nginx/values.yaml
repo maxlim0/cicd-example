@@ -1,7 +1,7 @@
 controller:
   name: controller
 
-  replicaCount: 2
+  replicaCount: 1
 
   ingressClassResource:
     name: nginx

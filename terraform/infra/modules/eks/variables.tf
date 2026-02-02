@@ -54,7 +54,7 @@ variable "node_group_instance_types" {
 variable "node_group_capacity_type" {
   description = "ON_DEMAND or SPOT."
   type        = string
-  default     = "SPOT"
+  default     = "ON_DEMAND"
 }
 
 variable "node_group_desired_size" {

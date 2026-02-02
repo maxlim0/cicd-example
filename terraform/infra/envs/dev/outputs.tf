@@ -53,3 +53,7 @@ output "eks_cluster_ca_certificate" {
 output "eks_node_group_name" {
   value = module.eks.node_group_name
 }
+
+output "cert_manager_role_arn" {
+  value = module.eks_addons.cert_manager_role_arn
+}
