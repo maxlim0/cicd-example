@@ -52,7 +52,10 @@ data "aws_iam_policy_document" "cert_manager_route53" {
 
     actions = [
       "route53:ListHostedZones",
-      "route53:ListResourceRecordSets"
+      "route53:ListHostedZonesByName",
+      "route53:ListResourceRecordSets",
+      "route53:GetChange",
+      "route53:GetHostedZone"
     ]
 
     resources = ["*"]
