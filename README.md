@@ -15,3 +15,4 @@ kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.pas
  - Karpenter
  - Monitoring
  - CloudFlare VPN host / ZeroTrust
+ - add Helm Secrets intergrtation for ArgoCD admin stable password 

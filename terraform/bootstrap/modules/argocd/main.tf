@@ -33,3 +33,18 @@ resource "helm_release" "argocd" {
     kubernetes_namespace_v1.this
   ]
 }
+
+resource "time_sleep" "wait_for_argocd_secret" {
+  depends_on = [helm_release.argocd]
+
+  create_duration = "30s"
+}
+
+data "kubernetes_secret" "argocd_initial_admin" {
+  metadata {
+    name      = "argocd-initial-admin-secret"
+    namespace = "argocd"
+  }
+
+  depends_on = [time_sleep.wait_for_argocd_secret]
+}
