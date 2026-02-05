@@ -21,3 +21,30 @@ server:
       - hosts:
           - argocd.p.qqqq.ws
         secretName: argocd-tls
+
+extraObjects:
+  - apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: root-system
+      namespace: argocd
+      labels:
+        app.kubernetes.io/part-of: system-root
+    spec:
+      project: default
+
+      source:
+        repoURL: "https://github.com/maxlim0/cicd-example.git"
+        targetRevision: main
+        path: gitops/clusters/dev/system
+
+      destination:
+        server: "https://kubernetes.default.svc"
+        namespace: argocd
+
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
