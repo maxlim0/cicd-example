@@ -16,12 +16,6 @@ variable "create_namespace" {
   default     = true
 }
 
-variable "values_yaml" {
-  description = "Additional Helm values (raw YAML)."
-  type        = string
-  default     = ""
-}
-
 variable "timeout" {
   description = "Helm release timeout in seconds."
   type        = number

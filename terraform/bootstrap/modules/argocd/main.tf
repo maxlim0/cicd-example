@@ -1,15 +1,15 @@
-resource "kubernetes_namespace_v1" "this" {
-  count = var.create_namespace ? 1 : 0
+# resource "kubernetes_namespace_v1" "this" {
+#   count = var.create_namespace ? 1 : 0
 
-  metadata {
-    name = var.namespace
+#   metadata {
+#     name = var.namespace
 
-    labels = {
-      "app.kubernetes.io/part-of" = "argocd"
-      "platform.layer"            = "bootstrap"
-    }
-  }
-}
+#     labels = {
+#       "app.kubernetes.io/part-of" = "argocd"
+#       "platform.layer"            = "bootstrap"
+#     }
+#   }
+# }
 
 resource "helm_release" "argocd" {
   name       = "argocd"
@@ -19,13 +19,15 @@ resource "helm_release" "argocd" {
   chart      = "argo-cd"
   version    = var.chart_version
 
-  create_namespace = false
+  create_namespace = true
   timeout          = var.timeout
   wait             = true
   atomic           = true
   cleanup_on_fail  = true
 
-  values = var.values_yaml != "" ? [var.values_yaml] : []
+  values = [
+    file("${path.module/argocd-values.yaml}")
+  ]
 
   depends_on = [
     kubernetes_namespace_v1.this
