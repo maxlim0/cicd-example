@@ -88,4 +88,4 @@ jobs:
           EOF
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform plan
