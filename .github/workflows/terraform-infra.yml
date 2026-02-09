@@ -4,14 +4,18 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 permissions:
   id-token: write
   contents: read
 
 jobs:
-  terraform-infra:
-    name: Terraform Infra
+  terraform-infra-check:
+    name: Terraform Check (PR only)
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
 
     defaults:
@@ -43,11 +47,45 @@ jobs:
           EOF
 
       - name: Terraform Lint (fmt + validate)
-        id: lint
         run: |
           terraform fmt -check -recursive
           terraform validate
 
       - name: Terraform Plan
-        if: ${{ success() }}
         run: terraform plan -out=tfplan
+
+  terraform-infra-apply:
+    name: Terraform Apply (on merge)
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: terraform/infra/envs/dev
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::978937106980:role/terraform-github-ci-role
+          aws-region: us-east-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Create tfvars file from secret
+        run: |
+          cat << 'EOF' > terraform.tfvars
+          ${{ secrets.TFVARS_INFRA }}
+          EOF
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
