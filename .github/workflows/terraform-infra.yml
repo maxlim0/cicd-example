@@ -36,9 +36,11 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      - name: Create tfvars from secret
+      - name: Create tfvars file from secret
         run: |
-          echo "${{ secrets.TFVARS_INFRA }}" > terraform.tfvars
+          cat << 'EOF' > terraform.tfvars
+          ${{ secrets.TFVARS_INFRA }}
+          EOF
 
       - name: Terraform Lint (fmt + validate)
         id: lint
