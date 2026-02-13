@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "terraform/bootstrap/modules/argocd/argocd-values"
+      - "terraform/bootstrap/modules/argocd/argocd-values.yaml"
 
 jobs:
   helm-lint:
