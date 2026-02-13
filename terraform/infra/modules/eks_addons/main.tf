@@ -8,6 +8,17 @@ resource "aws_eks_addon" "pod_identity_agent" {
 
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "OVERWRITE"
+
+  configuration_values = jsonencode({
+    tolerations = [
+      {
+        key      = "system"
+        operator = "Equal"
+        value    = "true"
+        effect   = "NoSchedule"
+      }
+    ]
+  })
 }
 
 ############################
@@ -15,11 +26,26 @@ resource "aws_eks_addon" "pod_identity_agent" {
 ############################
 
 resource "aws_eks_addon" "external_dns" {
-  cluster_name = var.cluster_name
-  addon_name   = "external-dns"
+  cluster_name  = var.cluster_name
+  addon_name    = "external-dns"
 
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "OVERWRITE"
+
+  configuration_values = jsonencode({
+    tolerations = [
+      {
+        key      = "CriticalAddonsOnly"
+        operator = "Exists"
+      },
+      {
+        key      = "system"
+        operator = "Equal"
+        value    = "true"
+        effect   = "NoSchedule"
+      }
+    ]
+  })
 
   pod_identity_association {
     service_account = "external-dns"

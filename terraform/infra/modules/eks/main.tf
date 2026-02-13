@@ -110,6 +110,16 @@ resource "aws_eks_node_group" "this" {
     max_size     = var.node_group_max_size
   }
 
+  taint {
+    key    = "system"
+    value  = "true"
+    effect = "NO_SCHEDULE"
+  }
+
+  labels = {
+    node-role = "system"
+  }
+  
   tags = merge(local.common_tags, {
     Name = "${var.cluster_name}-${var.node_group_name}"
   })
