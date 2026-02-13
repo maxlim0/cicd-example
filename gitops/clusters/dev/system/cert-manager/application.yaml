@@ -12,24 +12,8 @@ spec:
     targetRevision: v1.19.2
     helm:
       releaseName: cert-manager
-      values: |
-        installCRDs: true
-        replicaCount: 1
-        podDisruptionBudget:
-          enabled: false
-          minAvailable: 1
-        extraArgs:
-          - --enable-certificate-owner-ref=true
-        resources:
-          requests:
-            cpu: 50m
-            memory: 128Mi
-          limits:
-            cpu: 200m
-            memory: 256Mi
-        serviceAccount:
-          create: true
-          name: cert-manager
+      valueFiles:
+        - values.yaml
 
   destination:
     server: https://kubernetes.default.svc

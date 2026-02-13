@@ -1,0 +1,34 @@
+name: GitOps Helm Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "gitops/clusters/dev/system/cert-manager"
+
+jobs:
+  helm-lint:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: gitops/clusters/dev/system/cert-manager
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/setup-helm@v4
+
+      - name: Add Argo Helm Repo
+        run: |
+          helm repo add cert-manager oci://quay.io/jetstack/charts/cert-manager
+          helm repo update
+
+      - name: Pull Chart
+        run: |
+          helm pull cert-manager/cert-manager --untar
+
+      - name: Helm Lint
+        run: |
+          helm lint ./cert-manager -f cert-manager/values.yaml
