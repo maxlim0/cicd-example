@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "gitops/clusters/dev/system/cert-manager"
+      - "gitops/clusters/dev/system/cert-manager/**"
 
 jobs:
   helm-lint:
