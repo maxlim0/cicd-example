@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "gitops/**"
+      - "terraform/bootstrap/modules/argocd/argocd-values"
 
 jobs:
   helm-lint:
