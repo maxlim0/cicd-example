@@ -1,11 +1,11 @@
-name: ArgoCD BootStrap Helm Validation
+name: ArgoCD bootstrap Helm validation
 
 on:
   pull_request:
     branches:
       - main
     paths:
-      - "gitops/clusters/dev/system/cert-manager/**"
+      - "terraform/bootstrap/modules/argocd/argocd-values.yaml"
 
 jobs:
   helm-lint:
@@ -13,7 +13,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: gitops/clusters/dev/system/cert-manager
+        working-directory: terraform/bootstrap/modules
 
     steps:
       - uses: actions/checkout@v4
@@ -22,13 +22,13 @@ jobs:
 
       - name: Add Argo Helm Repo
         run: |
-          helm repo add cert-manager https://charts.jetstack.io
+          helm repo add argo-helm https://argoproj.github.io/argo-helm
           helm repo update
 
       - name: Pull Chart
         run: |
-          helm pull cert-manager/cert-manager --untar
+          helm pull argo-helm/argo-cd --untar
 
       - name: Helm Lint
         run: |
-          helm lint ./cert-manager -f cert-manager/values.yaml
+          helm lint ./argo-cd -f argocd/argocd-values.yaml

@@ -1,11 +1,11 @@
-name: GitOps Helm Validation
+name: GitOps Cert-manager Helm Validation
 
 on:
   pull_request:
     branches:
       - main
     paths:
-      - "terraform/bootstrap/modules/argocd/argocd-values.yaml"
+      - "gitops/clusters/dev/system/cert-manager/**"
 
 jobs:
   helm-lint:
@@ -13,22 +13,22 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform/bootstrap/modules
+        working-directory: gitops/clusters/dev/system/cert-manager
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: azure/setup-helm@v4
 
-      - name: Add Argo Helm Repo
+      - name: Add cert-manager Helm repo
         run: |
-          helm repo add argo-helm https://argoproj.github.io/argo-helm
+          helm repo add cert-manager https://charts.jetstack.io
           helm repo update
 
       - name: Pull Chart
         run: |
-          helm pull argo-helm/argo-cd --untar
+          helm pull cert-manager/cert-manager --untar
 
       - name: Helm Lint
         run: |
-          helm lint ./argo-cd -f argocd/argocd-values.yaml
+          helm lint ./cert-manager -f cert-manager/values.yaml
