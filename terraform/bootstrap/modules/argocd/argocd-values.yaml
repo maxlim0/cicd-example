@@ -6,6 +6,15 @@ configs:
     server.insecure: true
 
 server:
+  tolerations:
+    - key: "system"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+
+  nodeSelector:
+    node-role: system
+
   ingress:
     enabled: true
     ingressClassName: nginx
@@ -48,3 +57,44 @@ extraObjects:
         automated:
           prune: true
           selfHeal: true
+
+controller:
+  tolerations:
+    - key: "system"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+
+  nodeSelector:
+    node-role: system
+
+repoServer:
+  tolerations:
+    - key: "system"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+
+  nodeSelector:
+    node-role: system
+
+applicationSet:
+  tolerations:
+    - key: "system"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+
+  nodeSelector:
+    node-role: system
+
+
+redis:
+  tolerations:
+    - key: "system"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+
+  nodeSelector:
+    node-role: system

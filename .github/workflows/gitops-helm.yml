@@ -1,0 +1,34 @@
+name: GitOps Helm Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "gitops/**"
+
+jobs:
+  helm-lint:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: terraform/bootstrap/modules
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/setup-helm@v4
+
+      - name: Add Argo Helm Repo
+        run: |
+          helm repo add argo-helm https://argoproj.github.io/argo-helm
+          helm repo update
+
+      - name: Pull Chart
+        run: |
+          helm pull argo-helm/argo-cd --untar
+
+      - name: Helm Lint
+        run: |
+          helm lint ./argo-cd -f argocd/argocd-values.yaml
