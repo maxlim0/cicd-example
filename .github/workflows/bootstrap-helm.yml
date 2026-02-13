@@ -1,4 +1,4 @@
-name: GitOps Helm Validation
+name: ArgoCD BootStrap Helm Validation
 
 on:
   pull_request:
@@ -22,7 +22,7 @@ jobs:
 
       - name: Add Argo Helm Repo
         run: |
-          helm repo add cert-manager oci://quay.io/jetstack/charts/cert-manager
+          helm repo add cert-manager https://charts.jetstack.io
           helm repo update
 
       - name: Pull Chart
