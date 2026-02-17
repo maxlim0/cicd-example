@@ -57,3 +57,7 @@ output "eks_node_group_name" {
 output "cert_manager_role_arn" {
   value = module.eks_addons.cert_manager_role_arn
 }
+
+output "aws_iam_openid_connect_provider" {
+  value = module.eks.aws_iam_openid_connect_provider
+}

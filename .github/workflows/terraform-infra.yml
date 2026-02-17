@@ -56,9 +56,6 @@ jobs:
           terraform fmt -check -recursive
           terraform validate
 
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
-
   terraform-infra-apply:
     name: Terraform Apply (on merge)
     if: ${{ github.event_name == 'push' }}
