@@ -1,7 +1,7 @@
 global:
   domain: argocd.p.qqqq.ws
   nodeSelector:
-  node-role: system
+    node-role: system
 
 configs:
   params:

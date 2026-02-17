@@ -15,10 +15,6 @@ resource "helm_release" "argocd" {
   values = [
     file("${path.module}/argocd-values.yaml")
   ]
-
-  # depends_on = [
-  #   kubernetes_namespace_v1.this
-  # ]
 }
 
 resource "time_sleep" "wait_for_argocd_secret" {
