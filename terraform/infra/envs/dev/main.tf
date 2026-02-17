@@ -50,5 +50,5 @@ module "eks_addons" {
 module "karpenter" {
   source = "../../modules/karpenter"
 
-  cluster_name       = var.eks_cluster_name
+  cluster_name = var.eks_cluster_name
 }
