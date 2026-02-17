@@ -7,16 +7,6 @@ configs:
   params:
     server.insecure: true
 
-server:
-  tolerations:
-    - key: "system"
-      operator: "Equal"
-      value: "true"
-      effect: "NoSchedule"
-
-  nodeSelector:
-    node-role: system
-
   ingress:
     enabled: true
     ingressClassName: nginx

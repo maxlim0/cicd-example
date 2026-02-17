@@ -46,3 +46,9 @@ module "eks_addons" {
   cluster_name    = module.eks.cluster_name
   route53_zone_id = var.route53_zone_id
 }
+
+module "karpenter" {
+  source = "../../modules/karpenter"
+
+  cluster_name       = var.eks_cluster_name
+}
